@@ -1,0 +1,26 @@
+{
+    "nome": "Casa & Decoração",
+    "slug": "casa",
+    "icone": "🏠",
+    "nome_site": "Home Decor",
+    "descricao": "Inspirações para transformar sua casa em um lar aconchegante e estiloso.",
+    "url_base": "https://homedecor.reviewnexus.blog",
+    "idioma": "pt",
+    "autor": "Home Decor",
+    "tema": "moderno",
+    "publicar_por_dia": 3,
+    "usar_ia_imagens": true,
+    "cores": {
+        "primaria": "#c4956a",
+        "secundaria": "#8b6b4d",
+        "fundo": "#f5f0eb",
+        "texto": "#2d1f14",
+        "card": "#ffffff",
+        "destaque": "#e8c9a0"
+    },
+    "redes_sociais": {
+        "instagram": "https://instagram.com/topofertas",
+        "facebook": "https://facebook.com/topofertas",
+        "twitter": "https://twitter.com/topofertas"
+    }
+}
