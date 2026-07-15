@@ -1,56 +1,68 @@
 <?xml version="1.0" ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://homedecor.reviewnexus.blog/</loc>
-    <lastmod>2026-07-14</lastmod>
+    <loc>https://homedecor.brightnest.blog/</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://homedecor.reviewnexus.blog/sobre.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <loc>https://homedecor.brightnest.blog/sobre.html</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://homedecor.reviewnexus.blog/contato.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <loc>https://homedecor.brightnest.blog/contato.html</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://homedecor.reviewnexus.blog/politica-privacidade.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <loc>https://homedecor.brightnest.blog/politica-privacidade.html</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://homedecor.reviewnexus.blog/cookies.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <loc>https://homedecor.brightnest.blog/cookies.html</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://homedecor.reviewnexus.blog/cozinha/</loc>
-    <lastmod>2026-07-14</lastmod>
+    <loc>https://homedecor.brightnest.blog/decoração/</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://homedecor.reviewnexus.blog/decoração/</loc>
-    <lastmod>2026-07-14</lastmod>
+    <loc>https://homedecor.brightnest.blog/sala-de-estar/</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://homedecor.reviewnexus.blog/decoração/guia-de-cores-para-sala/</loc>
-    <lastmod>2026-07-14</lastmod>
+    <loc>https://homedecor.brightnest.blog/decoração/tendencias-de-decoracao-para-2026-o-guia-completo/</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://homedecor.reviewnexus.blog/cozinha/10-dicas-para-organizar-a-cozinha/</loc>
-    <lastmod>2026-07-14</lastmod>
+    <loc>https://homedecor.brightnest.blog/decoração/como-usar-cores-neutras-na-decoracao-sem-ficar-monotono/</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://homedecor.brightnest.blog/decoração/vasos-decorativos-dicas-para-escolher-os-modelos-perfeitos/</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://homedecor.brightnest.blog/sala-de-estar/sofa-retratil-conforto-maximo-review-completo/</loc>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

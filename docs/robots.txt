@@ -3,4 +3,4 @@ Allow: /
 Disallow: /assets/
 Disallow: /404.html
 
-Sitemap: https://homedecor.reviewnexus.blog/sitemap.xml
+Sitemap: https://homedecor.brightnest.blog/sitemap.xml
