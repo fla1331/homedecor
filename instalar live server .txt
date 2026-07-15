@@ -1,0 +1,3 @@
+npm install -g live-server na raiz 
+cd C:\Users\Flávio\Desktop\sites\homedecor\docs
+live-server

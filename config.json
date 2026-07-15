@@ -4,7 +4,7 @@
     "icone": "🏠",
     "nome_site": "Home Decor",
     "descricao": "Inspirações para transformar sua casa em um lar aconchegante e estiloso.",
-    "url_base": "https://homedecor.reviewnexus.blog",
+    "url_base": "https://homedecor.brightnest.blog",
     "idioma": "pt",
     "autor": "Home Decor",
     "tema": "moderno",
@@ -16,7 +16,10 @@
         "fundo": "#f5f0eb",
         "texto": "#2d1f14",
         "card": "#ffffff",
-        "destaque": "#e8c9a0"
+        "hover": "#b8845a",
+        "destaque": "#e8c9a0",
+        "whatsapp": "#25D366"
+
     },
     "redes_sociais": {
         "instagram": "https://instagram.com/topofertas",

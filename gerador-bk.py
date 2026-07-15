@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 GERADOR DE ARTIGOS - HOMEDECOR
-VERSÃO COM SINCRONIZAÇÃO AUTOMÁTICA DE STATUS E TEMPLATES
+VERSÃO COM SINCRONIZAÇÃO AUTOMÁTICA DE STATUS
 """
 
 from dotenv import load_dotenv
@@ -30,14 +30,14 @@ CONFIG = {
     'nome': 'Casa & Decoração',
     'slug': 'casa',
     'icone': '🏠',
-    'nome_site': 'Home Decor',
-    'descricao': 'Inspirações para transformar sua casa em um lar aconchegante e estiloso.',
-    'url_base': 'https://homedecor.reviewnexus.blog',
+    'nome_site': 'Top Ofertas',
+    'descricao': 'Inspirações e reviews para transformar sua casa em um lar aconchegante e estiloso.',
+    'url_base': 'https://homedecorcasa.netlify.app',
     'idioma': 'pt',
     'ano': datetime.now().year,
     'csv': 'artigos.csv',
     'usar_ia_imagens': True,
-    'autor': 'HomeDecor Team',
+    'autor': 'Equipe Top Ofertas',
     'email_contato': 'contato@homedecorcasa.netlify.app',
     'publicar_por_dia': 3,
     'redes_sociais': {
@@ -188,46 +188,31 @@ class Gerador:
     def __init__(self):
         self.base = Path(__file__).parent
         self.docs = self.base / "docs"
-        self.templates = self.base / "templates"
         self.assets_css = self.docs / "assets" / "css"
         self.assets_js = self.docs / "assets" / "js"
         self.assets_img = self.docs / "assets" / "img"
         
+        # Criar pastas
         self.assets_css.mkdir(parents=True, exist_ok=True)
         self.assets_js.mkdir(parents=True, exist_ok=True)
         self.assets_img.mkdir(parents=True, exist_ok=True)
         
+        # Carregar config
         self.carregar_config()
         
+        # Idioma
         self.idioma = CONFIG.get('idioma', 'pt')
         self.t = IDIOMAS.get(self.idioma, IDIOMAS['pt'])
         
+        # APIs
         self.ia_api_key = os.getenv("OPENROUTER_API_KEY")
         
+        # Criar arquivos base
         self.criar_csv()
         self.criar_css()
         self.criar_js()
         
         self.mostrar_painel()
-    
-    # ==================== TEMPLATES ====================
-    
-    def ler_template(self, nome):
-        caminho = self.templates / nome
-        if caminho.exists():
-            with open(caminho, 'r', encoding='utf-8') as f:
-                return f.read()
-        return None
-    
-    def renderizar_template(self, nome, variaveis):
-        template = self.ler_template(nome)
-        if template is None:
-            return None
-        
-        html = template
-        for chave, valor in variaveis.items():
-            html = html.replace(f'{{{{{chave}}}}}', str(valor))
-        return html
     
     # ==================== CONFIG ====================
     
@@ -245,6 +230,7 @@ class Gerador:
     # ==================== SINCRONIZAR STATUS ====================
     
     def sincronizar_status(self):
+        """Verifica se os artigos publicados ainda existem na pasta docs"""
         artigos = self.ler_csv()
         alterado = False
         
@@ -320,50 +306,25 @@ class Gerador:
             return
         
         dados = [
-            ["artigo", "links_afiliados", "status", "categoria", "palavras_chave", "descricao", "tipo", "data_publicacao", "autor"],
-            ["Poltrona Conforto Ergonômica", "", "rascunho", "decoração", "poltrona conforto ergonômica", "Review completo da Poltrona Conforto", "review", "", "HomeDecor Team"],
-            ["Mesa de Centro Design Moderno", "", "rascunho", "decoração", "mesa centro design moderno", "Análise detalhada da Mesa de Centro", "review", "", "HomeDecor Team"],
-            ["Luminária Pendente Industrial", "", "rascunho", "decoração", "luminária pendente industrial", "Review da Luminária Pendente", "review", "", "HomeDecor Team"],
-            ["Tapete Persa Moderno", "", "rascunho", "decoração", "tapete persa moderno", "Guia do Tapete Persa", "guia", "", "HomeDecor Team"],
-            ["Estante Rústica 6 Prateleiras", "", "rascunho", "decoração", "estante rústica 6 prateleiras", "Review da Estante Rústica", "review", "", "HomeDecor Team"],
-            ["Quadro Decorativo Abstrato", "", "rascunho", "decoração", "quadro decorativo abstrato", "Review do Quadro Decorativo", "review", "", "HomeDecor Team"],
-            ["Cama Box Queen Premium", "", "rascunho", "quarto", "cama box queen premium", "Review da Cama Box Queen", "review", "", "HomeDecor Team"],
+            ["artigo", "links_afiliados", "status", "categoria", "palavras_chave", "descricao", "idioma", "data_publicacao", "autor"],
+            ["Poltrona Conforto Ergonômica", "https://afiliado.com/poltrona", "rascunho", "decoração", "poltrona conforto ergonômica", "Review completo da Poltrona Conforto", "pt", "", "Equipe Top Ofertas"],
+            ["Mesa de Centro Design Moderno", "https://afiliado.com/mesa", "rascunho", "decoração", "mesa centro design moderno", "Análise detalhada da Mesa de Centro", "pt", "", "Equipe Top Ofertas"],
+            ["Luminária Pendente Industrial", "https://afiliado.com/luminaria", "rascunho", "decoração", "luminária pendente industrial", "Review da Luminária Pendente", "pt", "", "Equipe Top Ofertas"],
+            ["Tapete Persa Moderno", "https://afiliado.com/tapete", "rascunho", "decoração", "tapete persa moderno", "Guia do Tapete Persa", "pt", "", "Equipe Top Ofertas"],
+            ["Estante Rústica 6 Prateleiras", "https://afiliado.com/estante", "rascunho", "decoração", "estante rústica 6 prateleiras", "Review da Estante Rústica", "pt", "", "Equipe Top Ofertas"],
+            ["Quadro Decorativo Abstrato", "https://afiliado.com/quadro", "rascunho", "decoração", "quadro decorativo abstrato", "Review do Quadro Decorativo", "pt", "", "Equipe Top Ofertas"],
         ]
         
         with open(csv_path, 'w', encoding='utf-8', newline='') as f:
             writer = csv.writer(f)
             writer.writerows(dados)
         print(f"✅ CSV criado: {CONFIG['csv']}")
-
-      # ==================== PÁGINA DE BUSCA ====================
-    
-    def criar_pagina_busca(self):
-        t = self.t
-        # Usa o template de busca
-        template = self.ler_template('busca.html')
-        if template:
-            variaveis = {
-                'NOME_SITE': CONFIG['nome_site'],
-                'HEADER': self.get_header('inicio'),
-                'FOOTER': self.get_footer(),
-                'IDIOMA': t['lang']
-            }
-            html = self.renderizar_template('busca.html', variaveis)
-            caminho = self.docs / "busca.html"
-            with open(caminho, 'w', encoding='utf-8') as f:
-                f.write(html)
-            return caminho
-        return None
     
     # ==================== CSS ====================
     
     def criar_css(self):
-        css_origem = self.base / "assets" / "css" / "style.css"
-        css_destino = self.assets_css / "style.css"
-        
-        if css_origem.exists():
-            shutil.copy2(css_origem, css_destino)
-            print("✅ CSS copiado do assets/")
+        css_path = self.assets_css / "style.css"
+        if css_path.exists():
             return
         
         c = CONFIG['cores']
@@ -401,6 +362,7 @@ body {{
 
 .container {{ max-width: 1100px; margin: 0 auto; padding: 0 20px; }}
 
+/* ===== HEADER ===== */
 header {{
     background: var(--card);
     padding: 15px 0;
@@ -432,6 +394,7 @@ header .container {{
 .logo .icone {{ font-size: 2rem; }}
 .logo .nome {{ color: var(--primaria); }}
 
+/* ===== MENU ===== */
 .menu-toggle {{
     display: none;
     background: none;
@@ -477,6 +440,7 @@ nav a:hover, nav a.ativo {{
 }}
 .theme-toggle:hover {{ background: var(--fundo); }}
 
+/* ===== BANNER ===== */
 .banner {{
     background: linear-gradient(135deg, var(--fundo), var(--destaque));
     padding: 40px 30px;
@@ -488,6 +452,7 @@ nav a:hover, nav a.ativo {{
 .banner h1 {{ font-size: 2.2rem; font-weight: 800; }}
 .banner p {{ font-size: 1.05rem; opacity: 0.8; margin-top: 8px; }}
 
+/* ===== ARTIGO ===== */
 .artigo {{
     background: var(--card);
     padding: 35px;
@@ -533,6 +498,7 @@ nav a:hover, nav a.ativo {{
 .artigo ul {{ margin: 10px 0 16px 22px; }}
 .artigo li {{ margin-bottom: 5px; }}
 
+/* ===== FAQ ===== */
 .faq-item {{
     margin: 8px 0;
     padding: 12px 18px;
@@ -556,6 +522,7 @@ nav a:hover, nav a.ativo {{
 }}
 .faq-item.open .resposta {{ display: block; }}
 
+/* ===== TABELA ===== */
 table {{
     width: 100%;
     border-collapse: collapse;
@@ -575,6 +542,7 @@ table td {{
 }}
 table tr:nth-child(even) {{ background: var(--fundo); }}
 
+/* ===== CTA ===== */
 .cta {{
     background: var(--fundo);
     padding: 30px;
@@ -602,6 +570,7 @@ table tr:nth-child(even) {{ background: var(--fundo); }}
 }}
 .btn-pequeno {{ padding: 8px 18px; font-size: 0.85rem; }}
 
+/* ===== SIDEBAR ===== */
 .sidebar {{
     display: grid;
     gap: 20px;
@@ -629,6 +598,7 @@ table tr:nth-child(even) {{ background: var(--fundo); }}
 }}
 .widget ul li a:hover {{ color: var(--primaria); }}
 
+/* ===== GRID ===== */
 .grid {{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -668,6 +638,7 @@ table tr:nth-child(even) {{ background: var(--fundo); }}
 }}
 .card h3 a:hover {{ color: var(--primaria); }}
 
+/* ===== FOOTER ===== */
 footer {{
     background: var(--texto);
     color: white;
@@ -725,6 +696,7 @@ footer .copyright {{
     border-top: 1px solid rgba(255,255,255,0.08);
 }}
 
+/* ===== COOKIES ===== */
 .cookies-banner {{
     position: fixed;
     bottom: 0;
@@ -754,6 +726,7 @@ footer .copyright {{
 }}
 .cookies-banner .btn-cookies:hover {{ background: var(--secundaria); }}
 
+/* ===== RESPONSIVO ===== */
 @media (max-width: 992px) {{
     .logo {{ font-size: 1.4rem; }}
     .artigo .imagem-destaque {{ height: 280px; }}
@@ -799,23 +772,20 @@ footer .copyright {{
     .artigo .imagem-destaque {{ height: 150px; }}
 }}
 """
-        with open(css_destino, 'w', encoding='utf-8') as f:
+        with open(css_path, 'w', encoding='utf-8') as f:
             f.write(css)
-        print("✅ CSS criado (fallback)")
+        print("✅ CSS criado")
     
     # ==================== JS ====================
     
     def criar_js(self):
-        js_origem = self.base / "assets" / "js" / "script.js"
-        js_destino = self.assets_js / "script.js"
-        
-        if js_origem.exists():
-            shutil.copy2(js_origem, js_destino)
-            print("✅ JS copiado do assets/")
+        js_path = self.assets_js / "script.js"
+        if js_path.exists():
             return
         
         js = """
 document.addEventListener('DOMContentLoaded', function() {
+    
     // ===== MENU MOBILE =====
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('nav');
@@ -898,136 +868,12 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(card);
     });
     
-    // ===== TOC DINÂMICO =====
-    const content = document.getElementById('article-content');
-    const tocList = document.getElementById('toc-list');
-    
-    if (content && tocList) {
-        const headings = content.querySelectorAll('h2, h3');
-        let tocItems = [];
-        
-        headings.forEach((heading, index) => {
-            if (!heading.id) {
-                heading.id = 'section-' + index;
-            }
-            const level = heading.tagName.toLowerCase();
-            const text = heading.textContent;
-            const id = heading.id;
-            tocItems.push({ level, text, id });
-        });
-        
-        if (tocItems.length > 0) {
-            let tocHtml = '';
-            tocItems.forEach(item => {
-                const indent = item.level === 'h3' ? 'style="padding-left: 16px;"' : '';
-                tocHtml += `<li ${indent}><a href="#${item.id}">${item.text}</a></li>`;
-            });
-            tocList.innerHTML = tocHtml;
-            
-            tocList.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    const target = document.getElementById(targetId);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        tocList.querySelectorAll('a').forEach(a => a.classList.remove('active'));
-                        this.classList.add('active');
-                    }
-                });
-            });
-        }
-    }
-    
-    // ===== NEWSLETTER =====
-    const newsletterForm = document.getElementById('newsletter-form');
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('newsletter-email').value;
-            if (email) {
-                alert('📧 Obrigado por assinar nossa newsletter! Em breve você receberá novidades.');
-                this.reset();
-            }
-        });
-    }
-    
-    // ===== BUSCA =====
-    const searchBtn = document.querySelector('.btn-search');
-    const headerActions = document.querySelector('.header-actions');
-    
-    if (searchBtn && headerActions) {
-        const searchInput = document.createElement('input');
-        searchInput.type = 'text';
-        searchInput.placeholder = 'Buscar artigos...';
-        searchInput.className = 'search-input';
-        searchInput.style.cssText = `
-            display: none;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            padding: 8px 12px;
-            border: 2px solid var(--primaria);
-            border-radius: 8px;
-            background: var(--card);
-            color: var(--texto);
-            min-width: 200px;
-            z-index: 100;
-        `;
-        headerActions.style.position = 'relative';
-        headerActions.appendChild(searchInput);
-        
-        searchBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const isVisible = searchInput.style.display === 'block';
-            searchInput.style.display = isVisible ? 'none' : 'block';
-            if (!isVisible) searchInput.focus();
-        });
-        
-        searchInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                const term = this.value.trim().toLowerCase();
-                if (term) {
-                    const cards = document.querySelectorAll('.post-card');
-                    let found = false;
-                    cards.forEach(card => {
-                        const title = card.querySelector('.post-card-title a');
-                        if (title) {
-                            const text = title.textContent.toLowerCase();
-                            if (text.includes(term)) {
-                                card.style.display = 'block';
-                                found = true;
-                            } else {
-                                card.style.display = 'none';
-                            }
-                        }
-                    });
-                    if (!found) {
-                        alert('Nenhum artigo encontrado para: ' + term);
-                    }
-                }
-            }
-        });
-    }
-    
-    // ===== SCROLL SUAVE EXPLORAR TÓPICOS =====
-    const exploreBtn = document.querySelector('.btn-outline');
-    if (exploreBtn) {
-        exploreBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector('.layout');
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    }
-    
     console.log('✅ Site carregado!');
 });
 """
-        with open(js_destino, 'w', encoding='utf-8') as f:
+        with open(js_path, 'w', encoding='utf-8') as f:
             f.write(js)
-        print("✅ JS criado (fallback)")
+        print("✅ JS criado")
     
     # ==================== UTILITÁRIOS ====================
     
@@ -1080,33 +926,59 @@ document.addEventListener('DOMContentLoaded', function() {
     
     # ==================== CONTEÚDO COM IA ====================
     
-    def gerar_conteudo_ia(self, artigo, link, categoria="geral", palavras_chave="", tipo="review"):
+    def gerar_conteudo_ia(self, artigo, link, categoria="geral", palavras_chave=""):
         if not self.ia_api_key:
-            return self.conteudo_basico(artigo, link, tipo)
+            return self.conteudo_basico(artigo, link)
         
         prompt_nicho = PROMPTS_NICHO.get(categoria, PROMPTS_NICHO['geral'])
+        faq = prompt_nicho.get('faq', PROMPTS_NICHO['geral']['faq'])
         
-        prompt_template = self.ler_template(f'prompts/{tipo}.txt')
+        faq_html = ""
+        for i, pergunta in enumerate(faq[:6]):
+            faq_html += f"""
+            <div class="faq-item">
+                <div class="pergunta">
+                    <span>❓ {pergunta}</span>
+                    <span>▼</span>
+                </div>
+                <div class="resposta">
+                    <p>Resposta detalhada para: {pergunta}</p>
+                </div>
+            </div>"""
         
-        if prompt_template:
-            print(f"   🤖 Gerando conteúdo do tipo: {tipo} para: {categoria}...")
-            
-            prompt = prompt_template.replace('{artigo}', artigo)
-            prompt = prompt.replace('{link}', link)
-            prompt = prompt.replace('{categoria}', categoria)
-            prompt = prompt.replace('{tom}', prompt_nicho['tom'])
-            prompt = prompt.replace('{palavras_chave}', palavras_chave or prompt_nicho['palavras'])
-            prompt = prompt.replace('{quantidade}', str(random.randint(8, 12)))
-        else:
-            print(f"   ⚠️ Template {tipo}.txt não encontrado, usando fallback...")
-            prompt = self._gerar_prompt_fallback(artigo, link, categoria, palavras_chave, tipo)
+        print(f"   🤖 Gerando conteúdo rico para: {categoria}...")
+        
+        prompt = f"""
+        Crie um review COMPLETO e MUITO DETALHADO sobre {artigo} em português do Brasil.
+        
+        NICHO: {categoria}
+        TOM: {prompt_nicho['tom']}
+        PALAVRAS-CHAVE: {prompt_nicho['palavras']}
+        {f'Palavras-chave específicas: {palavras_chave}' if palavras_chave else ''}
+        
+        ESTRUTURA OBRIGATÓRIA:
+        
+        1. Título em <h1> chamativo
+        2. INTRODUÇÃO (4-5 parágrafos)
+        3. SOBRE O PRODUTO (2-3 parágrafos)
+        4. BENEFÍCIOS em <h2> com <ul> (7-8 itens)
+        5. ESPECIFICAÇÕES TÉCNICAS (tabela com 6-8 linhas)
+        6. PRÓS E CONTRAS (listas separadas)
+        7. ANÁLISE DETALHADA (3-4 parágrafos)
+        8. DICAS E RECOMENDAÇÕES
+        9. FAQ com {len(faq)} perguntas e respostas
+        10. CONCLUSÃO (2-3 parágrafos) com link: {link}
+        
+        TOM: {prompt_nicho['tom']}
+        Retorne APENAS o HTML válido.
+        """
         
         try:
             headers = {"Authorization": f"Bearer {self.ia_api_key}", "Content-Type": "application/json"}
             data = {
                 "model": "deepseek/deepseek-chat",
                 "messages": [
-                    {"role": "system", "content": f"Você é especialista em {categoria} e criação de conteúdo do tipo {tipo}."},
+                    {"role": "system", "content": f"Você é especialista em {categoria} e criação de conteúdo."},
                     {"role": "user", "content": prompt}
                 ],
                 "max_tokens": 6000,
@@ -1123,134 +995,41 @@ document.addEventListener('DOMContentLoaded', function() {
                 conteudo = re.sub(r'```(?:html)?\s*', '', conteudo)
                 conteudo = re.sub(r'\s*```', '', conteudo)
                 
-                if 'faq-item' not in conteudo.lower() or 'faq-question' not in conteudo.lower():
-                    conteudo += self._gerar_faq_fallback(categoria)
+                if 'faq-item' not in conteudo.lower():
+                    conteudo += f"""
+                    <h2>{self.t['faq']}</h2>
+                    {faq_html}
+                    """
                 
                 return conteudo
             else:
-                print(f"   ⚠️ Erro na API: {response.status_code}")
-                return self.conteudo_basico(artigo, link, tipo)
+                return self.conteudo_basico(artigo, link)
         except Exception as e:
             print(f"   ⚠️ Erro IA: {e}")
-            return self.conteudo_basico(artigo, link, tipo)
-    
-    def _gerar_prompt_fallback(self, artigo, link, categoria, palavras_chave, tipo="review"):
-        prompt_nicho = PROMPTS_NICHO.get(categoria, PROMPTS_NICHO['geral'])
-        
-        tipos = {
-            'review': f"""
-            Crie um REVIEW COMPLETO sobre {artigo} em português do Brasil.
-            
-            NICHO: {categoria}
-            TOM: {prompt_nicho['tom']}
-            PALAVRAS-CHAVE: {palavras_chave or prompt_nicho['palavras']}
-            
-            ESTRUTURA OBRIGATÓRIA (REVIEW) - Use IDs e classes:
-            1. Título em <h1> com id="introducao"
-            2. INTRODUÇÃO (4-5 parágrafos) - <h2 id="introducao">
-            3. SOBRE O PRODUTO - <h2 id="sobre-o-produto">
-            4. BENEFÍCIOS - <h2 id="beneficios"> com <ul>
-            5. ESPECIFICAÇÕES - <table class="article-table">
-            6. PRÓS E CONTRAS - <h2 id="pros-e-contras">
-            7. ANÁLISE DETALHADA - <h2 id="analise-detalhada">
-            8. DICAS - <h2 id="dicas">
-            9. FAQ - <div class="faq"> com <div class="faq-item">
-            10. CONCLUSÃO - <h2 id="conclusao">
-            11. CTA - <div class="cta-box"> com link: {link}
-            
-            Use classes: article-table, faq, faq-item, faq-question, faq-answer, cta-box, btn-primary
-            Retorne APENAS HTML válido.
-            """,
-            'guia': f"""
-            Crie um GUIA COMPLETO sobre {artigo} em português do Brasil.
-            NICHO: {categoria}
-            TOM: {prompt_nicho['tom']}
-            PALAVRAS-CHAVE: {palavras_chave or prompt_nicho['palavras']}
-            
-            ESTRUTURA: Título, Introdução, Capítulos, FAQ, Conclusão, CTA com link: {link}
-            Use classes: article-table, faq, faq-item, cta-box, btn-primary
-            Retorne APENAS HTML válido.
-            """,
-            'lista': f"""
-            Crie uma LISTA com {artigo} em português do Brasil.
-            NICHO: {categoria}
-            TOM: {prompt_nicho['tom']}
-            PALAVRAS-CHAVE: {palavras_chave or prompt_nicho['palavras']}
-            
-            ESTRUTURA: Título, Introdução, 8-12 itens com <h3>, FAQ, Conclusão, CTA com link: {link}
-            Use classes: article-table, faq, faq-item, cta-box, btn-primary
-            Retorne APENAS HTML válido.
-            """,
-            'tutorial': f"""
-            Crie um TUTORIAL sobre {artigo} em português do Brasil.
-            NICHO: {categoria}
-            TOM: {prompt_nicho['tom']}
-            PALAVRAS-CHAVE: {palavras_chave or prompt_nicho['palavras']}
-            
-            ESTRUTURA: Título, Introdução, Materiais, Passo a passo, FAQ, Conclusão, CTA com link: {link}
-            Use classes: article-table, faq, faq-item, cta-box, btn-primary
-            Retorne APENAS HTML válido.
-            """,
-            'comparativo': f"""
-            Crie um COMPARATIVO sobre {artigo} em português do Brasil.
-            NICHO: {categoria}
-            TOM: {prompt_nicho['tom']}
-            PALAVRAS-CHAVE: {palavras_chave or prompt_nicho['palavras']}
-            
-            ESTRUTURA: Título, Introdução, Produtos comparados, Tabela comparativa, Análise, FAQ, Conclusão, CTA com link: {link}
-            Use classes: article-table, faq, faq-item, cta-box, btn-primary
-            Retorne APENAS HTML válido.
-            """
-        }
-        
-        return tipos.get(tipo, tipos['review'])
-    
-    def _gerar_faq_fallback(self, categoria):
-        prompt_nicho = PROMPTS_NICHO.get(categoria, PROMPTS_NICHO['geral'])
-        faq = prompt_nicho.get('faq', PROMPTS_NICHO['geral']['faq'])
-        
-        faq_html = f"""
-        <h2 id="faq">{self.t['faq']}</h2>
-        <div class="faq">
-        """
-        for pergunta in faq[:6]:
-            faq_html += f"""
-            <div class="faq-item">
-                <button class="faq-question" type="button">
-                    {pergunta}
-                    <span class="faq-icon">▼</span>
-                </button>
-                <div class="faq-answer">
-                    <p>Resposta detalhada para: {pergunta}</p>
-                </div>
-            </div>
-            """
-        faq_html += "</div>"
-        return faq_html
+            return self.conteudo_basico(artigo, link)
     
     # ==================== REVISÃO COM IA ====================
     
-    def revisar_com_ia(self, conteudo, artigo, categoria="geral", tipo="review"):
+    def revisar_com_ia(self, conteudo, artigo, categoria="geral"):
         if not self.ia_api_key:
             return conteudo
         
-        print(f"   🔍 Revisando e aprofundando conteúdo (tipo: {tipo})...")
+        print(f"   🔍 Revisando e aprofundando conteúdo...")
         
         prompt_nicho = PROMPTS_NICHO.get(categoria, PROMPTS_NICHO['geral'])
         
         prompt = f"""
         Revise e MELHORE SIGNIFICATIVAMENTE este artigo sobre {artigo}.
         
-        TIPO: {tipo}
         TOM: {prompt_nicho['tom']}
         
         O QUE MELHORAR:
-        1. Aprofunde a introdução e adicione id="introducao"
-        2. Adicione mais detalhes nos benefícios com id="beneficios"
-        3. Enriqueça a tabela com class="article-table"
-        4. Adicione análise de mercado com id="analise-de-mercado"
-        5. Melhore o FAQ com class="faq" e class="faq-item"
-        6. Adicione id="conclusao" na conclusão
+        1. Aprofunde a introdução
+        2. Adicione mais detalhes nos benefícios
+        3. Enriqueça a tabela de especificações
+        4. Adicione uma seção de "Análise de Mercado"
+        5. Melhore o FAQ
+        6. Adicione uma conclusão forte
         
         CONTEÚDO ORIGINAL:
         {conteudo}
@@ -1263,7 +1042,7 @@ document.addEventListener('DOMContentLoaded', function() {
             data = {
                 "model": "deepseek/deepseek-chat",
                 "messages": [
-                    {"role": "system", "content": f"Revisor especialista em {categoria} e conteúdo do tipo {tipo}."},
+                    {"role": "system", "content": f"Revisor especialista em {categoria}."},
                     {"role": "user", "content": prompt}
                 ],
                 "max_tokens": 6000,
@@ -1286,26 +1065,16 @@ document.addEventListener('DOMContentLoaded', function() {
             print(f"   ⚠️ Erro na revisão: {e}")
             return conteudo
     
-    def conteudo_basico(self, artigo, link, tipo="review"):
+    def conteudo_basico(self, artigo, link):
         t = self.t
-        
-        titulo_map = {
-            'review': f"Review Completo: {artigo}",
-            'guia': f"Guia Completo: {artigo}",
-            'lista': f"Lista: {artigo}",
-            'tutorial': f"Tutorial: {artigo}",
-            'comparativo': f"Comparativo: {artigo}"
-        }
-        titulo = titulo_map.get(tipo, f"Artigo: {artigo}")
-        
         return f"""
-<h1 id="introducao">{titulo}</h1>
+<h1>{artigo}</h1>
 
 <p><strong>{artigo}</strong> é a escolha perfeita para sua casa.</p>
 
 <p>Com design sofisticado e acabamento premium, este produto vai transformar completamente seu ambiente.</p>
 
-<h2 id="beneficios">Benefícios</h2>
+<h2>Benefícios</h2>
 <ul>
     <li><strong>Design sofisticado:</strong> Peça que eleva o estilo do ambiente</li>
     <li><strong>Versatilidade:</strong> Combina com diferentes estilos de decoração</li>
@@ -1313,34 +1082,18 @@ document.addEventListener('DOMContentLoaded', function() {
     <li><strong>Funcionalidade:</strong> Unindo estética e utilidade</li>
 </ul>
 
-<h2 id="especificacoes">Especificações</h2>
-<table class="article-table">
-    <thead>
-        <tr>
-            <th>Característica</th>
-            <th>Detalhe</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Material</td>
-            <td>Premium com acabamento sofisticado</td>
-        </tr>
-        <tr>
-            <td>Estilo</td>
-            <td>Contemporâneo e atemporal</td>
-        </tr>
-        <tr>
-            <td>Garantia</td>
-            <td>12 meses</td>
-        </tr>
-    </tbody>
+<h2>Especificações</h2>
+<table>
+    <tr><th>Característica</th><th>Detalhe</th></tr>
+    <tr><td>Material</td><td>Premium com acabamento sofisticado</td></tr>
+    <tr><td>Estilo</td><td>Contemporâneo e atemporal</td></tr>
+    <tr><td>Garantia</td><td>12 meses</td></tr>
 </table>
 
-<div class="cta-box">
+<div class="cta">
     <h3>{t['comprar']}</h3>
     <p>Garanta o seu {artigo} com preço especial</p>
-    <a href="{link}" class="btn-primary" target="_blank" rel="nofollow sponsored">{t['ver_oferta']}</a>
+    <a href="{link}" class="btn" target="_blank" rel="nofollow sponsored">{t['ver_oferta']}</a>
 </div>
 """
     
@@ -1357,6 +1110,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return sorted(list(categorias))
     
     def get_artigos_publicados(self):
+        """Retorna lista de artigos publicados com seus dados"""
         artigos = self.ler_csv()
         publicados = []
         for a in artigos:
@@ -1372,21 +1126,9 @@ document.addEventListener('DOMContentLoaded', function() {
     # ==================== HEADER ====================
     
     def get_header(self, ativo="inicio", categoria_atual=None):
-        header_template = self.ler_template('header.html')
-        
-        if header_template:
-            categorias = self.get_categorias()
-            cat_links = ""
-            for cat in categorias[:6]:
-                ativo_cat = 'ativo' if categoria_atual == cat else ''
-                cat_links += f'<a href="/{cat}/" class="{ativo_cat}">{cat.title()}</a>'
-            
-            header_html = header_template.replace('{{CATEGORIAS_MENU}}', cat_links)
-            header_html = header_html.replace('{{NOME_SITE}}', CONFIG['nome_site'])
-            return header_html
-        
         t = self.t
         categorias = self.get_categorias()
+        
         cat_links = ""
         for cat in categorias[:6]:
             ativo_cat = 'ativo' if categoria_atual == cat else ''
@@ -1411,24 +1153,6 @@ document.addEventListener('DOMContentLoaded', function() {
     # ==================== FOOTER ====================
     
     def get_footer(self):
-        footer_template = self.ler_template('footer.html')
-        
-        if footer_template:
-            redes = CONFIG.get('redes_sociais', {})
-            social_links = ""
-            social_links_text = ""
-            for nome, url in redes.items():
-                emoji = {'instagram': '📸', 'facebook': '📘', 'twitter': '🐦'}.get(nome, '🔗')
-                social_links += f'<a href="{url}" target="_blank" rel="noopener">{emoji}</a>'
-                social_links_text += f'<a href="{url}" target="_blank" rel="noopener">{nome.title()}</a>\n'
-            
-            footer_html = footer_template.replace('{{NOME_SITE}}', CONFIG['nome_site'])
-            footer_html = footer_html.replace('{{DESCRICAO}}', CONFIG['descricao'])
-            footer_html = footer_html.replace('{{ANO}}', str(CONFIG['ano']))
-            footer_html = footer_html.replace('{{REDES_SOCIAIS}}', social_links)
-            footer_html = footer_html.replace('{{REDES_SOCIAIS_LINKS}}', social_links_text)
-            return footer_html
-        
         t = self.t
         redes = CONFIG.get('redes_sociais', {})
         social_links = ""
@@ -1520,6 +1244,7 @@ document.addEventListener('DOMContentLoaded', function() {
     # ==================== PÁGINAS ====================
     
     def criar_pagina(self, nome, titulo, conteudo, ativo="inicio"):
+        # Página como .html na raiz (não pasta)
         caminho = self.docs / f"{nome}.html"
         t = self.t
         
@@ -1643,15 +1368,11 @@ necessário para cumprir a lei ou proteger nossos direitos.</p>
 <p>Cookies são pequenos arquivos de texto que são armazenados no seu dispositivo quando você visita um site. Eles ajudam a lembrar suas preferências e melhorar sua navegação.</p>
 
 <h3>Cookies que Usamos</h3>
-<table class="article-table">
-    <thead>
-        <tr><th>Tipo</th><th>Finalidade</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>Essenciais</td><td>Necessários para o funcionamento básico do site</td></tr>
-        <tr><td>Preferências</td><td>Lembram suas configurações e preferências</td></tr>
-        <tr><td>Analíticos</td><td>Nos ajudam a entender como você usa o site</td></tr>
-    </tbody>
+<table>
+    <tr><th>Tipo</th><th>Finalidade</th></tr>
+    <tr><td>Essenciais</td><td>Necessários para o funcionamento básico do site</td></tr>
+    <tr><td>Preferências</td><td>Lembram suas configurações e preferências</td></tr>
+    <tr><td>Analíticos</td><td>Nos ajudam a entender como você usa o site</td></tr>
 </table>
 
 <h3>Gerenciamento de Cookies</h3>
@@ -1710,6 +1431,7 @@ necessário para cumprir a lei ou proteger nossos direitos.</p>
     # ==================== PÁGINAS DE CATEGORIA ====================
     
     def criar_pagina_categoria(self, categoria):
+        # Categoria na raiz: /categoria/
         caminho = self.docs / categoria / "index.html"
         t = self.t
         c = CONFIG
@@ -1725,57 +1447,20 @@ necessário para cumprir a lei ou proteger nossos direitos.</p>
         
         artigos_cat.sort(key=lambda x: x['data_publicacao'], reverse=True)
         
-        template = self.ler_template('categoria.html')
+        lista = '<div class="grid">'
+        for a in artigos_cat:
+            img = self.gerar_imagem(a['nome'], categoria)
+            data_formatada = datetime.strptime(a['data_publicacao'], "%Y-%m-%d").strftime("%d/%m/%Y") if a['data_publicacao'] else datetime.now().strftime("%d/%m/%Y")
+            lista += f"""
+            <div class="card">
+                <img src="{img}" alt="{a['nome']}" class="card-img" loading="lazy">
+                <div class="card-meta">📅 {data_formatada}</div>
+                <h3><a href="/{categoria}/{a['slug']}/">{a['nome']}</a></h3>
+                <a href="/{categoria}/{a['slug']}/" class="btn btn-pequeno">{t['menu_inicio']} →</a>
+            </div>"""
+        lista += '</div>'
         
-        if template:
-            lista = ""
-            for a in artigos_cat:
-                img = self.gerar_imagem(a['nome'], categoria)
-                data_formatada = datetime.strptime(a['data_publicacao'], "%Y-%m-%d").strftime("%d/%m/%Y") if a['data_publicacao'] else datetime.now().strftime("%d/%m/%Y")
-                
-                card_template = self.ler_template('card.html')
-                if card_template:
-                    card = card_template.replace('{{TITULO}}', a['nome'])
-                    card = card.replace('{{LINK}}', f"/{categoria}/{a['slug']}/")
-                    card = card.replace('{{CATEGORIA}}', categoria)
-                    card = card.replace('{{DATA}}', data_formatada)
-                    card = card.replace('{{IMAGEM}}', img)
-                    card = card.replace('{{DESCRICAO}}', a['nome'][:100] + '...')
-                    card = card.replace('{{TEMPO_LEITURA}}', str(random.randint(4, 8)))
-                    lista += card
-                else:
-                    lista += f"""
-                    <div class="card">
-                        <img src="{img}" alt="{a['nome']}" class="card-img" loading="lazy">
-                        <div class="card-meta">📅 {data_formatada}</div>
-                        <h3><a href="/{categoria}/{a['slug']}/">{a['nome']}</a></h3>
-                        <a href="/{categoria}/{a['slug']}/" class="btn btn-pequeno">Ler mais →</a>
-                    </div>"""
-            
-            variaveis = {
-                'CATEGORIA': categoria.title(),
-                'ARTIGOS_CATEGORIA': lista,
-                'HEADER': self.get_header('categoria', categoria),
-                'FOOTER': self.get_footer(),
-                'IDIOMA': t['lang']
-            }
-            html = self.renderizar_template('categoria.html', variaveis)
-            
-        else:
-            lista = '<div class="grid">'
-            for a in artigos_cat:
-                img = self.gerar_imagem(a['nome'], categoria)
-                data_formatada = datetime.strptime(a['data_publicacao'], "%Y-%m-%d").strftime("%d/%m/%Y") if a['data_publicacao'] else datetime.now().strftime("%d/%m/%Y")
-                lista += f"""
-                <div class="card">
-                    <img src="{img}" alt="{a['nome']}" class="card-img" loading="lazy">
-                    <div class="card-meta">📅 {data_formatada}</div>
-                    <h3><a href="/{categoria}/{a['slug']}/">{a['nome']}</a></h3>
-                    <a href="/{categoria}/{a['slug']}/" class="btn btn-pequeno">{t['menu_inicio']} →</a>
-                </div>"""
-            lista += '</div>'
-            
-            html = f"""<!DOCTYPE html>
+        html = f"""<!DOCTYPE html>
 <html lang="{t['lang']}">
 <head>
     <meta charset="UTF-8">
@@ -1783,7 +1468,7 @@ necessário para cumprir a lei ou proteger nossos direitos.</p>
     <title>{c['nome_site']} - {categoria.title()}</title>
     <meta name="description" content="Artigos sobre {categoria}">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body>
     {self.get_header('categoria', categoria)}
@@ -1808,6 +1493,7 @@ necessário para cumprir a lei ou proteger nossos direitos.</p>
         print("\n📂 CRIANDO PÁGINAS DE CATEGORIA")
         print("-" * 40)
         
+        # Remove páginas de categoria antigas que não têm mais artigos
         for pasta in self.docs.iterdir():
             if pasta.is_dir() and pasta.name not in ['assets'] and (pasta / "index.html").exists():
                 if pasta.name in self.get_categorias():
@@ -1820,6 +1506,7 @@ necessário para cumprir a lei ou proteger nossos direitos.</p>
             if self.criar_pagina_categoria(cat):
                 print(f"   ✅ /{cat}/")
         
+        # Recria index e sitemap após atualizar categorias
         self.criar_index()
         self.criar_sitemap()
         
@@ -1832,15 +1519,15 @@ necessário para cumprir a lei ou proteger nossos direitos.</p>
         if not nome:
             return None
         
-        link = artigo_data.get('links_afiliados', '')
+        link = artigo_data.get('links_afiliados', 'https://afiliado.com/produto')
         palavras_chave = artigo_data.get('palavras_chave', '')
         descricao = artigo_data.get('descricao', f"Review completo de {nome}")
         categoria = artigo_data.get('categoria', 'geral')
-        tipo = artigo_data.get('tipo', 'review')
         data_publicacao = artigo_data.get('data_publicacao', datetime.now().strftime("%Y-%m-%d"))
         autor = artigo_data.get('autor', CONFIG['autor'])
         
         slug = self.criar_slug(nome)
+        # ARTIGO DENTRO DA CATEGORIA
         pasta = self.docs / categoria / slug
         t = self.t
         
@@ -1848,95 +1535,27 @@ necessário para cumprir a lei ou proteger nossos direitos.</p>
             print(f"   ⏭️ Já existe: {categoria}/{slug}")
             return pasta / "index.html"
         
-        print(f"   📝 Criando: {categoria}/{slug} (tipo: {tipo})")
+        print(f"   📝 Criando: {categoria}/{slug}")
         
         imagem = self.gerar_imagem(nome, categoria)
-        conteudo = self.gerar_conteudo_ia(nome, link, categoria, palavras_chave, tipo)
+        conteudo = self.gerar_conteudo_ia(nome, link, categoria, palavras_chave)
         
         if revisar and self.ia_api_key:
-            conteudo = self.revisar_com_ia(conteudo, nome, categoria, tipo)
+            conteudo = self.revisar_com_ia(conteudo, nome, categoria)
         
-        titulo_map = {
-            'review': f"{nome} - {t['review']}",
-            'guia': f"Guia Completo: {nome}",
-            'lista': f"Lista: {nome}",
-            'tutorial': f"Tutorial: {nome}",
-            'comparativo': f"Comparativo: {nome}",
-            'artigo': f"{nome} - {t['review']}"
-        }
-        titulo = titulo_map.get(tipo, f"{nome} - {t['review']}")
-        
+        titulo = f"{nome} - {t['review']}"
         url = f"{CONFIG['url_base']}/{categoria}/{slug}/"
+        
         data_formatada = datetime.strptime(data_publicacao, "%Y-%m-%d").strftime("%d/%m/%Y") if data_publicacao else datetime.now().strftime("%d/%m/%Y")
         
-        template = self.ler_template('artigo.html')
+        artigos_relacionados = self.get_artigos_relacionados(categoria, slug)
         
-        if template:
-            relacionados_html = ""
-            relacionados = self.get_artigos_publicados()
-            relacionados = [a for a in relacionados if a['slug'] != slug][:4]
-            for a in relacionados:
-                img = self.gerar_imagem(a['nome'], a['categoria'])
-                data_formatada_rel = datetime.strptime(a['data_publicacao'], "%Y-%m-%d").strftime("%d/%m/%Y") if a['data_publicacao'] else datetime.now().strftime("%d/%m/%Y")
-                
-                card_template = self.ler_template('card.html')
-                if card_template:
-                    card = card_template.replace('{{TITULO}}', a['nome'])
-                    card = card.replace('{{LINK}}', f"/{a['categoria']}/{a['slug']}/")
-                    card = card.replace('{{CATEGORIA}}', a['categoria'])
-                    card = card.replace('{{DATA}}', data_formatada_rel)
-                    card = card.replace('{{IMAGEM}}', img)
-                    card = card.replace('{{DESCRICAO}}', a['nome'][:100] + '...')
-                    card = card.replace('{{TEMPO_LEITURA}}', str(random.randint(4, 8)))
-                    relacionados_html += card
-                else:
-                    relacionados_html += f"""
-                    <div class="card">
-                        <img src="{img}" alt="{a['nome']}" class="card-img" loading="lazy">
-                        <div class="card-meta">📅 {data_formatada_rel}</div>
-                        <h3><a href="/{a['categoria']}/{a['slug']}/">{a['nome']}</a></h3>
-                        <a href="/{a['categoria']}/{a['slug']}/" class="btn btn-pequeno">Ler mais →</a>
-                    </div>"""
-            
-            variaveis = {
-                'TITULO': titulo,
-                'CONTEUDO': conteudo,
-                'CATEGORIA': categoria.title(),
-                'DATA': data_formatada,
-                'IMAGEM': imagem,
-                'AUTOR': autor,
-                'LINK_AFILIADO': link,
-                'URL': url,
-                'DESCRICAO': descricao,
-                'TEMPO_LEITURA': str(random.randint(4, 8)),
-                'IDIOMA': t['lang'],
-                'NOME_SITE': CONFIG['nome_site'],
-                'HEADER': self.get_header('inicio', categoria),
-                'FOOTER': self.get_footer(),
-                'RELACIONADOS': relacionados_html
-            }
-            html = self.renderizar_template('artigo.html', variaveis)
-            
-        else:
-            artigos_relacionados = self.get_artigos_relacionados(categoria, slug)
-            
-            if link and link.strip():
-                cta_html = f"""
-                <div class="cta-box">
-                    <h3>{t['comprar']}</h3>
-                    <p>Garanta o seu {nome} com preço especial</p>
-                    <a href="{link}" class="btn-primary" target="_blank" rel="nofollow sponsored">{t['ver_oferta']}</a>
-                </div>
-                """
-            else:
-                cta_html = ""
-            
-            html = f"""<!DOCTYPE html>
+        html = f"""<!DOCTYPE html>
 <html lang="{t['lang']}">
 <head>
     {self.get_meta_tags(titulo, descricao, url, imagem, {'artigo': nome, 'data_publicacao': data_publicacao, 'autor': autor})}
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body>
     {self.get_header('inicio', categoria)}
@@ -1954,12 +1573,10 @@ necessário para cumprir a lei ou proteger nossos direitos.</p>
                 <span>⏱️ {random.randint(4, 8)} min de leitura</span>
             </div>
             
-            <h1 id="introducao">{titulo}</h1>
+            <h1>{titulo}</h1>
             <img src="{imagem}" alt="{nome}" class="imagem-destaque" loading="lazy">
             
             {conteudo}
-            
-            {cta_html}
             
             <div style="margin-top:25px;padding-top:15px;border-top:1px solid var(--fundo);">
                 <p><strong>{t['compartilhar']}:</strong>
@@ -1971,6 +1588,12 @@ necessário para cumprir a lei ou proteger nossos direitos.</p>
         </div>
         
         <aside class="sidebar">
+            <div class="widget">
+                <h3>🎯 {t['ver_oferta']}</h3>
+                <p><strong>{nome}</strong></p>
+                <a href="{link}" class="btn btn-pequeno" target="_blank" rel="nofollow sponsored">{t['ver_oferta']}</a>
+            </div>
+            
             <div class="widget">
                 <h3>📚 {t['leia_tambem']}</h3>
                 <ul>
@@ -2006,6 +1629,7 @@ necessário para cumprir a lei ou proteger nossos direitos.</p>
                 break
         self.salvar_csv(artigos)
         
+        # Recria a página da categoria
         self.criar_pagina_categoria(categoria)
         
         print(f"   ✅ Salvo: docs/{categoria}/{slug}/index.html")
@@ -2030,7 +1654,7 @@ necessário para cumprir a lei ou proteger nossos direitos.</p>
     
     # ==================== INDEX ====================
     
-    def criar_index(self, pagina=1):
+    def criar_index(self):
         index_path = self.docs / "index.html"
         t = self.t
         c = CONFIG
@@ -2038,133 +1662,23 @@ necessário para cumprir a lei ou proteger nossos direitos.</p>
         artigos = self.get_artigos_publicados()
         artigos.sort(key=lambda x: x['data_publicacao'], reverse=True)
         
-        # ===== PAGINAÇÃO =====
-        artigos_por_pagina = 6
-        total_artigos = len(artigos)
-        total_paginas = (total_artigos + artigos_por_pagina - 1) // artigos_por_pagina if total_artigos > 0 else 1
-        
-        # Garante que a página é válida
-        pagina = max(1, min(pagina, total_paginas))
-        
-        # Pega os artigos da página atual
-        inicio = (pagina - 1) * artigos_por_pagina
-        fim = inicio + artigos_por_pagina
-        artigos_pagina = artigos[inicio:fim]
-        
-        template = self.ler_template('index.html')
-        
-        if template:
-            lista = ""
-            for a in artigos_pagina:
+        if artigos:
+            lista = '<div class="grid">'
+            for a in artigos[:12]:
                 img = self.gerar_imagem(a['nome'], a['categoria'])
                 data_formatada = datetime.strptime(a['data_publicacao'], "%Y-%m-%d").strftime("%d/%m/%Y") if a['data_publicacao'] else datetime.now().strftime("%d/%m/%Y")
-                
-                card_template = self.ler_template('card.html')
-                if card_template:
-                    card = card_template.replace('{{TITULO}}', a['nome'])
-                    card = card.replace('{{LINK}}', f"/{a['categoria']}/{a['slug']}/")
-                    card = card.replace('{{CATEGORIA}}', a['categoria'])
-                    card = card.replace('{{DATA}}', data_formatada)
-                    card = card.replace('{{IMAGEM}}', img)
-                    card = card.replace('{{DESCRICAO}}', a['nome'][:100] + '...')
-                    card = card.replace('{{TEMPO_LEITURA}}', str(random.randint(4, 8)))
-                    lista += card
-                else:
-                    lista += f"""
-                    <div class="card">
-                        <img src="{img}" alt="{a['nome']}" class="card-img" loading="lazy">
-                        <div class="card-meta">📅 {data_formatada}</div>
-                        <h3><a href="/{a['categoria']}/{a['slug']}/">{a['nome']}</a></h3>
-                        <a href="/{a['categoria']}/{a['slug']}/" class="btn btn-pequeno">{t['menu_inicio']} →</a>
-                    </div>"""
-            
-            relacionados_sidebar = ""
-            for a in artigos_pagina[:4]:
-                img = self.gerar_imagem(a['nome'], a['categoria'])
-                data_formatada_rel = datetime.strptime(a['data_publicacao'], "%Y-%m-%d").strftime("%d/%m/%Y") if a['data_publicacao'] else datetime.now().strftime("%d/%m/%Y")
-                relacionados_sidebar += f"""
-                <a href="/{a['categoria']}/{a['slug']}/" class="related-item">
-                    <img src="{img}" alt="{a['nome']}">
-                    <div class="related-item-body">
-                        <span class="related-item-cat">{a['categoria']}</span>
-                        <span class="related-item-title">{a['nome']}</span>
-                        <span class="related-item-date">{data_formatada_rel}</span>
-                    </div>
-                </a>"""
-            
-            tags = ""
-            categorias = self.get_categorias()
-            for cat in categorias[:7]:
-                tags += f'<a href="/{cat}/">{cat.title()}</a>\n'
-            
-            # ===== GERA A PAGINAÇÃO =====
-            navegacao = ""
-            if total_paginas > 1:
-                navegacao = '<div class="pagination">'
-                if pagina > 1:
-                    navegacao += f'<a href="/index{pagina-1}.html" class="page-link">« Anterior</a>'
-                for p in range(1, total_paginas + 1):
-                    if p == pagina:
-                        navegacao += f'<span class="page-link active">{p}</span>'
-                    else:
-                        navegacao += f'<a href="/index{p}.html" class="page-link">{p}</a>'
-                if pagina < total_paginas:
-                    navegacao += f'<a href="/index{pagina+1}.html" class="page-link">Próximo »</a>'
-                navegacao += '</div>'
-            
-            primeiro_artigo = f"/{artigos[0]['categoria']}/{artigos[0]['slug']}/" if artigos else "#"
-            
-            variaveis = {
-                'NOME_SITE': CONFIG['nome_site'],
-                'NOME': CONFIG['nome'],
-                'DESCRICAO': CONFIG['descricao'],
-                'ANO': CONFIG['ano'],
-                'IDIOMA': t['lang'],
-                'HEADER': self.get_header('inicio'),
-                'FOOTER': self.get_footer(),
-                'ARTIGOS': lista,
-                'RELACIONADOS_SIDEBAR': relacionados_sidebar,
-                'TAGS': tags,
-                'PRIMEIRO_ARTIGO': primeiro_artigo,
-                'PAGINACAO': navegacao
-            }
-            html = self.renderizar_template('index.html', variaveis)
-            
+                lista += f"""
+                <div class="card">
+                    <img src="{img}" alt="{a['nome']}" class="card-img" loading="lazy">
+                    <div class="card-meta">📅 {data_formatada}</div>
+                    <h3><a href="/{a['categoria']}/{a['slug']}/">{a['nome']}</a></h3>
+                    <a href="/{a['categoria']}/{a['slug']}/" class="btn btn-pequeno">{t['menu_inicio']} →</a>
+                </div>"""
+            lista += '</div>'
         else:
-            # ===== FALLBACK =====
-            if artigos_pagina:
-                lista = '<div class="grid" id="artigos-section">'
-                for a in artigos_pagina:
-                    img = self.gerar_imagem(a['nome'], a['categoria'])
-                    data_formatada = datetime.strptime(a['data_publicacao'], "%Y-%m-%d").strftime("%d/%m/%Y") if a['data_publicacao'] else datetime.now().strftime("%d/%m/%Y")
-                    lista += f"""
-                    <div class="card">
-                        <img src="{img}" alt="{a['nome']}" class="card-img" loading="lazy">
-                        <div class="card-meta">📅 {data_formatada}</div>
-                        <h3><a href="/{a['categoria']}/{a['slug']}/">{a['nome']}</a></h3>
-                        <a href="/{a['categoria']}/{a['slug']}/" class="btn btn-pequeno">{t['menu_inicio']} →</a>
-                    </div>"""
-                lista += '</div>'
-            else:
-                lista = '<p style="text-align:center;padding:40px 0;">Nenhum artigo publicado ainda.</p>'
-            
-            navegacao = ""
-            if total_paginas > 1:
-                navegacao = '<div class="pagination">'
-                if pagina > 1:
-                    navegacao += f'<a href="/index{pagina-1}.html" class="page-link">« Anterior</a>'
-                for p in range(1, total_paginas + 1):
-                    if p == pagina:
-                        navegacao += f'<span class="page-link active">{p}</span>'
-                    else:
-                        navegacao += f'<a href="/index{p}.html" class="page-link">{p}</a>'
-                if pagina < total_paginas:
-                    navegacao += f'<a href="/index{pagina+1}.html" class="page-link">Próximo »</a>'
-                navegacao += '</div>'
-            
-            primeiro_artigo = f"/{artigos[0]['categoria']}/{artigos[0]['slug']}/" if artigos else "#"
-            
-            html = f"""<!DOCTYPE html>
+            lista = '<p style="text-align:center;padding:40px 0;">Nenhum artigo publicado ainda.</p>'
+        
+        html = f"""<!DOCTYPE html>
 <html lang="{t['lang']}">
 <head>
     {self.get_meta_tags(f"{c['nome_site']} - {c['nome']}", c['descricao'], f"{c['url_base']}/")}
@@ -2177,33 +1691,22 @@ necessário para cumprir a lei ou proteger nossos direitos.</p>
         <div class="banner">
             <h1>{c['nome']}</h1>
             <p>{c['descricao']}</p>
-            <div class="hero-actions">
-                <a href="{primeiro_artigo}" class="btn-primary">Ler a história da semana</a>
-                <a href="#artigos-section" class="btn-outline">Explorar tópicos</a>
-            </div>
         </div>
         {lista}
-        {navegacao}
     </main>
     {self.get_footer()}
     <script src="assets/js/script.js"></script>
 </body>
 </html>"""
         
-        # ===== SALVA A PÁGINA =====
-        if pagina == 1:
-            caminho = self.docs / "index.html"
-        else:
-            caminho = self.docs / f"index{pagina}.html"
-        
-        with open(caminho, 'w', encoding='utf-8') as f:
+        with open(index_path, 'w', encoding='utf-8') as f:
             f.write(html)
-        print(f"✅ Index página {pagina} atualizado")
-        return caminho
+        print("✅ Index atualizado")
     
     # ==================== PUBLICAR EM LOTES ====================
     
     def publicar_lotes(self):
+        """Publica artigos em lotes controlados"""
         print("\n📦 PUBLICAR EM LOTES")
         print("=" * 50)
         
@@ -2392,6 +1895,7 @@ Sitemap: {c['url_base']}/sitemap.xml
     # ==================== RECRIAR TUDO ====================
     
     def recriar_tudo(self):
+        """Recria tudo do zero: index, páginas, categorias, sitemap"""
         print("\n🔄 RECRIANDO TUDO DO ZERO")
         print("=" * 40)
         print("📄 Recriando páginas...")
@@ -2406,6 +1910,7 @@ Sitemap: {c['url_base']}/sitemap.xml
         input("\nPressione Enter...")
     
     def sincronizar_agora(self):
+        """Sincroniza status e recria tudo"""
         print("\n🔄 SINCRONIZANDO AGORA")
         print("=" * 40)
         self.sincronizar_status()
@@ -2821,6 +2326,7 @@ Sitemap: {c['url_base']}/sitemap.xml
                 shutil.rmtree(pasta)
                 print(f"   🗑️ Removido: {a['categoria']}/{a['slug']}")
         
+        # Remove pastas de categoria
         for cat in self.get_categorias():
             pasta = self.docs / cat
             if pasta.exists():

@@ -2,9 +2,9 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Home Decor - Casa & Decoração</title>
-  <meta name="description" content="Inspirações para transformar sua casa em um lar aconchegante e estiloso.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cozinha - {{NOME_SITE}}</title>
+  <meta name="description" content="Artigos sobre Cozinha">
   <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
@@ -25,7 +25,7 @@
 
     <nav class="nav-menu" id="navMenu">
       <a href="/" class="active">Início</a>
-      <a href="/cozinha/" class="">Cozinha</a><a href="/decoração/" class="">Decoração</a>
+      <a href="/cozinha/" class="ativo">Cozinha</a><a href="/decoração/" class="">Decoração</a>
     </nav>
 
     <div class="header-actions">
@@ -45,28 +45,13 @@
 </header>
 
   <main class="container">
+    <div class="category-header">
+      <h1>Cozinha</h1>
+      <p>Artigos sobre Cozinha</p>
+    </div>
 
-    <!-- ===== Hero ===== -->
-    <section class="hero">
-      <span class="hero-eyebrow">Casa & Decoração · Est. 2026</span>
-      <h1>Casa & Decoração<br>Viva com <em>calor</em>.</h1>
-      <p>Inspirações para transformar sua casa em um lar aconchegante e estiloso.</p>
-      <div class="hero-actions">
-        <a href="/cozinha/10-dicas-para-organizar-a-cozinha/" class="btn-primary">Ler a história da semana</a>
-        <a href="#artigos-section" class="btn-outline">Explorar tópicos</a>
-      </div>
-    </section>
-
-    <!-- ===== Layout com grid + sidebar ===== -->
-    <div class="layout" id="artigos-section">
-      <div>
-        <div class="section-head">
-          <h2>Histórias recentes</h2>
-          <a href="/categoria/" class="see-all">Ver tudo →</a>
-        </div>
-
-        <div class="post-grid">
-          <article class="post-card">
+    <div class="post-grid">
+      <article class="post-card">
   <a href="/cozinha/10-dicas-para-organizar-a-cozinha/" class="post-card-img">
     <img src="https://image.pollinations.ai/prompt/10 Dicas para Organizar a Cozinha, cozinha, design de interiores, ambiente aconchegante, estilo clean, alta qualidade, 4k?width=1200&height=630&nologo=true" alt="10 Dicas para Organizar a Cozinha">
   </a>
@@ -76,72 +61,12 @@
     <div class="post-card-meta">
       <span>18/07/2026</span>
       <span class="meta-dot">·</span>
-      <span>8 min de leitura</span>
+      <span>6 min de leitura</span>
     </div>
     <p class="post-card-excerpt">10 Dicas para Organizar a Cozinha...</p>
     <a href="/cozinha/10-dicas-para-organizar-a-cozinha/" class="read-more">Ler mais →</a>
   </div>
-</article><article class="post-card">
-  <a href="/decoração/guia-de-cores-para-sala/" class="post-card-img">
-    <img src="https://image.pollinations.ai/prompt/Guia de Cores para Sala, decoração, design de interiores, ambiente aconchegante, estilo clean, alta qualidade, 4k?width=1200&height=630&nologo=true" alt="Guia de Cores para Sala">
-  </a>
-  <div class="post-card-body">
-    <a href="/decoração/" class="tag">decoração</a>
-    <h3 class="post-card-title"><a href="/decoração/guia-de-cores-para-sala/">Guia de Cores para Sala</a></h3>
-    <div class="post-card-meta">
-      <span>17/07/2026</span>
-      <span class="meta-dot">·</span>
-      <span>6 min de leitura</span>
-    </div>
-    <p class="post-card-excerpt">Guia de Cores para Sala...</p>
-    <a href="/decoração/guia-de-cores-para-sala/" class="read-more">Ler mais →</a>
-  </div>
 </article>
-          
-        </div>
-      </div>
-
-      <!-- ===== Sidebar ===== -->
-      <aside class="sidebar">
-        <div class="sidebar-block">
-          <h3>Posts relacionados</h3>
-          
-                <a href="/cozinha/10-dicas-para-organizar-a-cozinha/" class="related-item">
-                    <img src="https://image.pollinations.ai/prompt/10 Dicas para Organizar a Cozinha, cozinha, design de interiores, ambiente aconchegante, estilo clean, alta qualidade, 4k?width=1200&height=630&nologo=true" alt="10 Dicas para Organizar a Cozinha">
-                    <div class="related-item-body">
-                        <span class="related-item-cat">cozinha</span>
-                        <span class="related-item-title">10 Dicas para Organizar a Cozinha</span>
-                        <span class="related-item-date">18/07/2026</span>
-                    </div>
-                </a>
-                <a href="/decoração/guia-de-cores-para-sala/" class="related-item">
-                    <img src="https://image.pollinations.ai/prompt/Guia de Cores para Sala, decoração, design de interiores, ambiente aconchegante, estilo clean, alta qualidade, 4k?width=1200&height=630&nologo=true" alt="Guia de Cores para Sala">
-                    <div class="related-item-body">
-                        <span class="related-item-cat">decoração</span>
-                        <span class="related-item-title">Guia de Cores para Sala</span>
-                        <span class="related-item-date">17/07/2026</span>
-                    </div>
-                </a>
-        </div>
-
-        <div class="sidebar-block sidebar-newsletter" id="newsletter">
-          <h3>A carta de sexta</h3>
-          <p>Um e-mail por semana. Uma ideia para a sua casa. Sem spam.</p>
-          <form id="newsletter-form" action="#" method="POST">
-            <input type="email" id="newsletter-email" placeholder="seu@email.com" required>
-            <button type="submit" class="btn-primary">Assinar</button>
-          </form>
-        </div>
-
-        <div class="sidebar-block">
-          <h3>Tags populares</h3>
-          <div class="sidebar-tags">
-            <a href="/cozinha/">Cozinha</a>
-<a href="/decoração/">Decoração</a>
-
-          </div>
-        </div>
-      </aside>
     </div>
   </main>
 

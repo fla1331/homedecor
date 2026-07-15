@@ -1,1 +1,9 @@
+# Ignora arquivos que não são do site
 .env
+gerador.py
+artigos.csv
+config.json
+templates/
+layout/
+*.pyc
+__pycache__/
