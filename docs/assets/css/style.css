@@ -195,6 +195,7 @@ button {
   display: flex;
   align-items: center;
   gap: 10px;
+  widht:20%;
 }
 
 .btn-search {
@@ -204,6 +205,7 @@ button {
   padding: 9px 14px;
   font-size: 14px;
   font-weight: 500;
+  widht:150px;
   color: var(--ink-soft);
   border: 1px solid var(--line);
   border-radius: 999px;

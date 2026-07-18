@@ -2,61 +2,73 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://homedecor.brightnest.blog/</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>2026-07-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://homedecor.brightnest.blog/sobre.html</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>2026-07-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://homedecor.brightnest.blog/contato.html</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>2026-07-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://homedecor.brightnest.blog/politica-privacidade.html</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>2026-07-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://homedecor.brightnest.blog/cookies.html</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>2026-07-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://homedecor.brightnest.blog/decoração/</loc>
-    <lastmod>2026-07-15</lastmod>
+    <loc>https://homedecor.brightnest.blog/banheiro/</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://homedecor.brightnest.blog/quarto/</loc>
+    <lastmod>2026-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://homedecor.brightnest.blog/sala-de-estar/</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>2026-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://homedecor.brightnest.blog/decoração/tendencias-de-decoracao-para-2026-o-guia-completo/</loc>
-    <lastmod>2026-07-15</lastmod>
+    <loc>https://homedecor.brightnest.blog/sala-de-estar/rack-para-tv-modelos-e-como-escolher-o-melhor/</loc>
+    <lastmod>2026-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://homedecor.brightnest.blog/decoração/como-usar-cores-neutras-na-decoracao-sem-ficar-monotono/</loc>
-    <lastmod>2026-07-15</lastmod>
+    <loc>https://homedecor.brightnest.blog/sala-de-estar/estilo-escandinavo-na-sala-de-estar-guia-completo/</loc>
+    <lastmod>2026-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://homedecor.brightnest.blog/sala-de-estar/sofa-retratil-conforto-maximo-review-completo/</loc>
-    <lastmod>2026-07-15</lastmod>
+    <loc>https://homedecor.brightnest.blog/quarto/como-decorar-quarto-pequeno-dicas-para-otimizar-o-espaco/</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://homedecor.brightnest.blog/banheiro/como-decorar-banheiro-com-estilo-dicas-e-inspiracoes/</loc>
+    <lastmod>2026-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
