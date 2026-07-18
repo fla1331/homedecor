@@ -1,0 +1,13 @@
+# .gitignore
+.env
+artigos.csv
+config.json
+gerador.py
+gerador-bk.py
+__pycache__/
+*.pyc
+templates/
+layout/
+*.txt
+# Local Netlify folder
+.netlify

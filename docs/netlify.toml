@@ -1,5 +1,0 @@
-[functions]
-  directory = "netlify/functions"
-
-[functions."scheduled-build"]
-  schedule = "0 12 * * *"  # Roda todo dia às 12:00 UTC (9h da manhã no Brasil)
