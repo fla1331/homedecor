@@ -8,16 +8,15 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
       - name: Gerar site com Python
-        run: |
-          python gerador.py
+        run: python gerador.py
 
       - name: Deploy para Netlify
         uses: nwtgck/actions-netlify@v2.0
