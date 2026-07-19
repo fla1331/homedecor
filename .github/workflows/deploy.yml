@@ -19,7 +19,7 @@ jobs:
         run: python gerador.py
 
       - name: Deploy para Netlify
-        uses: nwtgck/actions-netlify@v3.0
+        uses: netlify/actions/deploy@v2
         with:
           publish-dir: './docs'
           production-branch: main
