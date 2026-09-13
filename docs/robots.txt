@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
-Disallow: /assets/
-Disallow: /404.html
 
-Sitemap: https://homedecor.brightnest.blog/sitemap.xml
+Sitemap: https://homedecor.brightnest.blog/pt/sitemap.xml
+Sitemap: https://homedecor.brightnest.blog/en/sitemap.xml
+Sitemap: https://homedecor.brightnest.blog/es/sitemap.xml
