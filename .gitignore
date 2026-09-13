@@ -1,13 +1,51 @@
-# .gitignore
-.env
-artigos.csv
-config.json
-gerador.py
-gerador-bk.py
+# ===== Python =====
 __pycache__/
-*.pyc
-templates/
-layout/
-*.txt
-# Local Netlify folder
-.netlify
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# ===== Variáveis de ambiente (NUNCA subir) =====
+.env
+.env.local
+.env.*.local
+
+# ===== Backups e temporários =====
+backups/
+temp/
+docs_backup_*/
+*_backup_*
+*.bak
+*.zip
+*.log
+logs/
+
+# ===== Cópias de arquivos =====
+* copy.py
+* Copia.py
+gerador copy*.py
+gerador - Copia.py
+
+# ===== VS Code =====
+.vscode/
+!.vscode/settings.json
+
+# ===== Sistema operacional =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== Node (se tiver) =====
+node_modules/
+npm-debug.log*
+
+# ===== Cache =====
+cache/
+*.tmp
