@@ -119,6 +119,77 @@ body.article-page .article-single {
   .travel-tip-box { flex-direction: column; text-align: center; }
 }
 
+/* ============================================
+   FORMULÁRIO DE CONTATO E NEWSLETTER
+   ============================================ */
+
+/* Grupo de campos - contato */
+.contact-form .form-group {
+  margin-bottom: 1.4rem;
+}
+
+/* Grupo de campos - newsletter */
+.newsletter-form .form-group,
+#newsletter-form .form-group {
+  margin-bottom: 1rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Labels */
+.form-group label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #2d2d2d;
+  margin-bottom: 0.35rem;
+}
+
+/* Inputs e Textarea */
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border:1px solid #ccc;
+  margin-bottom:10px;
+  font-family: inherit;
+  color: #2d2d2d;
+  background: #f8f6f4;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* Placeholder */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #b0a8a0;
+  font-weight: 300;
+}
+
+/* Focus */
+.form-group input:focus,
+.form-group textarea:focus {
+  background: #ffffff;
+  border-color: #b8956a;
+  box-shadow: 0 0 0 4px rgba(184, 149, 106, 0.12);
+}
+
+/* Hover */
+.form-group input:hover,
+.form-group textarea:hover {
+  background: #fcfaf8;
+}
+
+/* Textarea específico */
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+
 /* BADGES */
 .badge--sala-de-estar { background: #c4956a; }
 .badge--quarto { background: #d4a88a; }
@@ -389,72 +460,4 @@ body.article-page .article-single {
 
 .widget-recomendacoes ul li { list-style-type: none; }
 
-/* ============================================
-   FORMULÁRIO DE CONTATO E NEWSLETTER
-   ============================================ */
 
-/* Grupo de campos - contato */
-.contact-form .form-group {
-  margin-bottom: 1.4rem;
-}
-
-/* Grupo de campos - newsletter */
-.newsletter-form .form-group,
-#newsletter-form .form-group {
-  margin-bottom: 1rem;
-  width: 100%;
-  max-width: 500px;
-}
-
-/* Labels */
-.form-group label {
-  display: block;
-  font-weight: 600;
-  font-size: 0.85rem;
-  color: #2d2d2d;
-  margin-bottom: 0.35rem;
-}
-
-/* Inputs e Textarea */
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
-  border:1px solid #ccc;
-  margin-bottom:10px;
-  font-family: inherit;
-  color: #2d2d2d;
-  background: #f8f6f4;
-  border-radius: 10px;
-  transition: all 0.25s ease;
-  outline: none;
-  box-sizing: border-box;
-}
-
-/* Placeholder */
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-  color: #b0a8a0;
-  font-weight: 300;
-}
-
-/* Focus */
-.form-group input:focus,
-.form-group textarea:focus {
-  background: #ffffff;
-  border-color: #b8956a;
-  box-shadow: 0 0 0 4px rgba(184, 149, 106, 0.12);
-}
-
-/* Hover */
-.form-group input:hover,
-.form-group textarea:hover {
-  background: #fcfaf8;
-}
-
-/* Textarea específico */
-.form-group textarea {
-  resize: vertical;
-  min-height: 120px;
-}
