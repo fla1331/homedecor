@@ -4,24 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Decor - Decoração que inspira. Ambientes que acolhem.</title>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var idiomas = ['pt', 'en', 'es'];
-            var lang = (navigator.language || navigator.userLanguage || 'pt').substring(0, 2);
-            if (idiomas.includes(lang)) {
-                window.location.href = '/' + lang + '/';
-            }
-        });
-    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #a67c52;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.10) 0%, transparent 55%),
+                radial-gradient(circle at 70% 60%, rgba(139, 107, 77, 0.18) 0%, transparent 55%);
+            pointer-events: none;
+        }
+        .splash {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 0.6s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .splash__logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 130px;
+            height: 130px;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 28px;
+            backdrop-filter: blur(8px);
+            animation: float 3s ease-in-out infinite;
+        }
+        .splash__logo svg { width: 65px; height: 65px; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-6px); }
+        }
+        .splash__loader {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+        }
+        .splash__loader span {
+            display: block;
+            width: 6px;
+            height: 24px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.85);
+            animation: bars 1.2s ease-in-out infinite;
+        }
+        .splash__loader span:nth-child(1) { animation-delay: 0s;    }
+        .splash__loader span:nth-child(2) { animation-delay: 0.15s; }
+        .splash__loader span:nth-child(3) { animation-delay: 0.3s;  }
+        @keyframes bars {
+            0%, 100% { transform: scaleY(0.4); opacity: 0.4; }
+            50%      { transform: scaleY(1);   opacity: 1;   }
+        }
+    </style>
 </head>
 <body>
-    <h1>Home Decor</h1>
-    <p>Inspirações, ideias e dicas de decoração para transformar sua casa em um lar aconchegante e estiloso.</p>
-    <div class="lang-options">
-        <a href="/pt/" class="lang-option">Português</a>
-<a href="/en/" class="lang-option">English</a>
-<a href="/es/" class="lang-option">Español</a>
-
+    <div class="splash">
+        <div class="splash__logo">
+            <svg viewBox="0 0 24 24" width="65" height="65" fill="none" aria-hidden="true">
+                <path d="M3 11.5 12 4l9 7.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5 10.5V20h14v-9.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9.5 20v-5h5v5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <div class="splash__loader" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </div>
+    <script>
+        (function() {
+            var idiomas = ['pt', 'en', 'es'];
+            var idiomaPadrao = 'pt';
+            var lang = (navigator.language || navigator.userLanguage || idiomaPadrao).substring(0, 2).toLowerCase();
+            var destino = idiomas.includes(lang) ? lang : idiomaPadrao;
+            setTimeout(function() {
+                window.location.replace('/' + destino + '/');
+            }, 900);
+        })();
+    </script>
 </body>
 </html>
