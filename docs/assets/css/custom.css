@@ -4,6 +4,7 @@
 
 /* commenta o bloco pra aparecer  */
 /* MODO LIMPO  esconde sidebar*/
+
 body.page .layout-with-sidebar,
 body.article-page .layout-with-sidebar {
     display: block !important;
