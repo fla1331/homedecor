@@ -563,11 +563,11 @@ p { margin-bottom: 1rem; color: var(--text-muted); line-height: 1.8; }
 }
 
 .article-table {
-  width: 100%; border-collapse: collapse; padding: 0 10px;
+  width: 100%; border-collapse: collapse; padding:  10px;
   border-radius: var(--radius-lg); overflow: hidden;
   box-shadow: var(--shadow-sm); background: var(--surface);
   border: 1px solid var(--border); margin: 25px 0;
-  min-width: 560px;
+  
 }
 .article-table thead tr { background: var(--text); }
 .article-table th {
@@ -896,3 +896,4 @@ p { margin-bottom: 1rem; color: var(--text-muted); line-height: 1.8; }
   .sidebar-partner { padding: 1rem; }
 }
 .category-header {text-align:center; margin:30px auto;}
+.category-header h1 {margin-bottom:15px;}
